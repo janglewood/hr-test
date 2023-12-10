@@ -14,23 +14,32 @@ import {
   Text,
 } from "@chakra-ui/react";
 
+const infoFields = [
+  {
+    title: "Capital",
+    value: "capital",
+  },
+  {
+    title: "Native",
+    value: "native",
+  },
+  {
+    title: "Currency",
+    value: "currency",
+  },
+];
+
 interface IProps {
   country: any;
   onClose: () => void;
 }
+
 export const CountryModal: FC<IProps> = ({ country, onClose }) => {
   return (
     <Modal isOpen={!!country} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <Flex
-          direction="column"
-          p={5}
-          color="#000"
-          bg="#f2c0f2;"
-          rounded="xl"
-          shadow="xl"
-        >
+        <Flex direction="column" p={5} color="#000" rounded="xl" shadow="xl">
           <ModalHeader>
             <Box>{`${country?.name} ${country?.emoji}`}</Box>
           </ModalHeader>
@@ -38,18 +47,12 @@ export const CountryModal: FC<IProps> = ({ country, onClose }) => {
           <ModalBody>
             <Box mt={5}>
               <List>
-                <ListItem display="flex" gap={2}>
-                  <Text fontWeight={600}>Capital:</Text>
-                  <Text>{country?.capital}</Text>
-                </ListItem>
-                <ListItem display="flex" gap={2}>
-                  <Text fontWeight={600}>Native:</Text>
-                  <Text>{country?.native}</Text>
-                </ListItem>
-                <ListItem display="flex" gap={2}>
-                  <Text fontWeight={600}>Currency:</Text>
-                  <Text>{country?.currency}</Text>
-                </ListItem>
+                {infoFields.map(({ title, value }) => (
+                  <ListItem display="flex" gap={2} key={value}>
+                    <Text fontWeight={600}>{`${title}:`}</Text>
+                    <Text>{country?.[value]}</Text>
+                  </ListItem>
+                ))}
               </List>
             </Box>
           </ModalBody>

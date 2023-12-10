@@ -1,12 +1,25 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Flex, Box, Fade, Center, Text, Input } from "@chakra-ui/react";
+import { Flex, Fade } from "@chakra-ui/react";
 import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { Step1 } from "./Step1";
 import { Step2 } from "./Step2";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useRouter } from "next/router";
 import { User } from "../../types/user";
+
+// common interface for both step components
+export interface IStepProps {
+  value: string;
+  handleInputChange: ({
+    target: { name, value },
+  }: {
+    target: { name: "name" | "jobTitle"; value: string };
+  }) => void;
+  handleNextStage: () => void;
+  isNextStepAlowed: boolean;
+  handleBack?: () => void;
+}
+
+const stepsConfig = [Step1, Step2];
 
 export const WelcomeModal: FC = () => {
   // hook to retrieve user data from localStorage
@@ -63,34 +76,26 @@ export const WelcomeModal: FC = () => {
     }
   }, [handleSubmit, push, step]);
 
+  // step component depends on step
+  const CurrentStep = useMemo(() => stepsConfig[step - 1], [step]);
+
   return (
     <Fade in={true} delay={0.5}>
       <Flex
-        direction="column"
         p={10}
         pt={20}
         color="#000"
-        bg="#f2c0f2;"
+        border="1px solid #e9e9e9"
         rounded="xl"
         shadow="xl"
       >
-        {step === 1 && (
-          <Step1
-            value={userData.name || ""}
-            handleInputChange={handleInputChange}
-            isNextStepAlowed={isNextStepAlowed}
-            handleNextStage={handleNextStage}
-          />
-        )}
-        {step === 2 && (
-          <Step2
-            value={userData.jobTitle || ""}
-            handleInputChange={handleInputChange}
-            isNextStepAlowed={isNextStepAlowed}
-            handleNextStage={handleNextStage}
-            handleBack={handleBack}
-          />
-        )}
+        <CurrentStep
+          value={userData[step === 1 ? "name" : "jobTitle"] || ""}
+          handleInputChange={handleInputChange}
+          isNextStepAlowed={isNextStepAlowed}
+          handleNextStage={handleNextStage}
+          handleBack={handleBack}
+        />
       </Flex>
     </Fade>
   );

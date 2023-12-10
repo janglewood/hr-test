@@ -1,9 +1,13 @@
+// wee need this hook specially for Next.js SSR
+"use client";
+
 import { useEffect, useState } from "react";
 
 export default function useLocalStorage<T>(
   key: string,
   defaultValue: T
 ): [T, (value: T) => void] {
+  // keep defaultValue if there is no value or localStorage is not defined yet
   const [value, setValue] = useState(defaultValue);
 
   useEffect(() => {
@@ -35,6 +39,7 @@ export default function useLocalStorage<T>(
 
       localStorage.setItem(key, JSON.stringify(value));
       if (typeof window !== "undefined") {
+        // invoke storage event if localStorage is not defined yet (code running on server)
         window.dispatchEvent(new StorageEvent("storage", { key }));
       }
     } catch (e) {

@@ -2,20 +2,9 @@ import { Flex, Fade, Text } from "@chakra-ui/react";
 import React, { FC } from "react";
 import { Button, ButtonGroup } from "@chakra-ui/react";
 import { Input } from "../../Input";
+import { IStepProps } from "..";
 
-interface IProps {
-  value: string;
-  handleInputChange: ({
-    target: { name, value },
-  }: {
-    target: { name: "name" | "jobTitle"; value: string };
-  }) => void;
-  handleBack: () => void;
-  handleNextStage: () => void;
-  isNextStepAlowed: boolean;
-}
-
-export const Step2: FC<IProps> = ({
+export const Step2: FC<IStepProps> = ({
   value,
   handleInputChange,
   isNextStepAlowed,
@@ -41,6 +30,7 @@ export const Step2: FC<IProps> = ({
         />
         <Flex mt={16} width={"100%"} justifyContent={"flex-end"}>
           <ButtonGroup>
+            {/* move back to first step */}
             <Button
               colorScheme="purple"
               variant="secondary"
@@ -48,6 +38,7 @@ export const Step2: FC<IProps> = ({
             >
               Back
             </Button>
+            {/* move to next step */}
             <Button
               colorScheme="purple"
               isDisabled={!isNextStepAlowed}

@@ -1,9 +1,10 @@
 import React, { useCallback, useMemo, useState } from "react";
 import createApolloClient from "../apollo-client";
 import Head from "next/head";
-import { Flex, ListItem, OrderedList } from "@chakra-ui/react";
+import { Flex, List, OrderedList, UnorderedList } from "@chakra-ui/react";
 import { GET_COUNTRIES } from "../src/graphql/queries/countries";
 import { CountryModal } from "../src/components/CountryModal";
+import { InfoListItem } from "../src/components/InfoListItem";
 
 export default function Info({ countries }) {
   const [countryModalCode, setCountryModalCode] = useState();
@@ -29,21 +30,23 @@ export default function Info({ countries }) {
         direction="column"
         p={10}
         color="#000"
-        bg="#f2c0f2;"
         rounded="xl"
         shadow="xl"
+        border="1px solid #e9e9e9"
+        width="100%"
+        maxHeight="calc(100vh - 54px - 16px - 32px)" // 100vh - header height - gap - layout padding
+        overflow=" scroll"
       >
-        <OrderedList>
-          {countries.map(({ code, name }) => (
-            <ListItem
+        <List display="flex" flexDirection="column">
+          {countries.map(({ code, name, emoji }) => (
+            <InfoListItem
               key={code}
-              cursor="pointer"
+              name={name}
+              emoji={emoji}
               onClick={() => setCountryModalCode(code)}
-            >
-              {name}
-            </ListItem>
+            />
           ))}
-        </OrderedList>
+        </List>
       </Flex>
 
       <CountryModal country={country} onClose={onClose} />
@@ -51,6 +54,7 @@ export default function Info({ countries }) {
   );
 }
 
+// we need this to render page on the server
 export async function getServerSideProps() {
   const client = createApolloClient();
   const { data } = await client.query({

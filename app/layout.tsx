@@ -13,12 +13,14 @@ export default function RootLayout({
   return (
     <Flex
       direction="column"
-      bgColor="#330c4a"
-      color="#fff"
+      color="#000"
       padding={16}
       minHeight="100vh"
+      gap={16}
     >
+      {/* header */}
       <NavBar />
+      {/* chakra ui provider to allow use chakra components on server side */}
       <Providers>
         <Flex width={"100%"} h={"100%"} flex={1}>
           <Center width={"100%"} alignSelf={"center"}>
