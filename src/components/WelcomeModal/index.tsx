@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import { User } from "../../types/user";
 import Image from "next/image";
 import { fonts } from "../../../app/fonts";
-import { useDetectMobileDevice } from "../../hooks/useDetectMobileDevice";
 
 // common interface for both step components
 export interface IStepProps {
