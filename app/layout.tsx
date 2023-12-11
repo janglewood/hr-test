@@ -4,6 +4,7 @@ import React from "react";
 import { Providers } from "./providers";
 import { Center, Flex } from "@chakra-ui/react";
 import NavBar from "../src/components/NavBar";
+import { fonts } from "./fonts";
 
 export default function RootLayout({
   children,
@@ -11,23 +12,32 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Flex
-      direction="column"
-      color="#000"
-      padding={16}
-      minHeight="100vh"
-      gap={16}
-    >
-      {/* header */}
-      <NavBar />
-      {/* chakra ui provider to allow use chakra components on server side */}
-      <Providers>
-        <Flex width={"100%"} h={"100%"} flex={1}>
+    /* chakra ui provider to allow use chakra components on server side */
+    <Providers>
+      <Flex
+        direction="column"
+        color="#000"
+        padding={16}
+        minHeight="100vh"
+        gap={8}
+        bgColor="#eaeaea"
+      >
+        {/* header */}
+        <NavBar />
+
+        {/* content */}
+        <Flex
+          width={"100%"}
+          h={"100%"}
+          flex={1}
+          // initial font
+          className={fonts.OpenSans.className}
+        >
           <Center width={"100%"} alignSelf={"center"}>
             {children}
           </Center>
         </Flex>
-      </Providers>
-    </Flex>
+      </Flex>
+    </Providers>
   );
 }

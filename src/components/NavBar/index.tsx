@@ -1,4 +1,13 @@
-import { Flex, Box, Text } from "@chakra-ui/react";
+import {
+  Flex,
+  Box,
+  Text,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { Link } from "@chakra-ui/next-js";
@@ -7,34 +16,60 @@ import Image from "next/image";
 
 export default function NavBar() {
   const [user] = useLocalStorage<User>("user", {});
-  const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <Flex as="nav" justify="space-between">
-      <Box fontSize={32}>⚛️</Box>
-
+    <Flex as="nav" justify="flex-end">
       {/* check if user is signed in. Is fo - show user info and add the link to edit data */}
-      {user && (
-        <Link
-          href="/"
-          onMouseOver={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          <Flex gap="16">
-            <Image
-              src={isHovered ? "/icons/edit.svg" : "/icons/user.svg"}
-              alt="500 Server Error"
-              width={24}
-              height={24}
-            />
-            <Flex direction="column" alignItems="flex-end">
-              <Text fontSize="16px" fontWeight={600}>
-                {user.name}
-              </Text>
-              <Text>{user.jobTitle}</Text>
+      {user.name && (
+        <Popover>
+          <PopoverTrigger>
+            <Flex
+              cursor="pointer"
+              bgColor="#fff"
+              width={8}
+              height={8}
+              rounded={100}
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Image
+                src="/icons/user.svg"
+                alt="500 Server Error"
+                width={16}
+                height={16}
+              />
             </Flex>
-          </Flex>
-        </Link>
+          </PopoverTrigger>
+          <PopoverContent
+            border="1px solid #e9e9e9"
+            rounded="xl"
+            shadow="xl"
+            boxShadow="none !important"
+            width="fit-content"
+          >
+            <Flex direction="column" rounded="xl" shadow="xl" padding={4}>
+              <PopoverHeader>
+                <Flex
+                  alignItems="center"
+                  justifyContent="center"
+                  bgColor="purple.500"
+                  color="white"
+                  width={24}
+                  height={24}
+                  rounded={100}
+                  mx="auto"
+                >
+                  <Text fontSize="4xl">
+                    {(user.name as string)[0].toLocaleUpperCase()}
+                  </Text>
+                </Flex>
+              </PopoverHeader>
+              <PopoverBody mx="auto">
+                <Link href="/">Change information</Link>
+              </PopoverBody>
+            </Flex>
+          </PopoverContent>
+        </Popover>
       )}
     </Flex>
   );

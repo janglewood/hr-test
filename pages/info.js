@@ -34,8 +34,9 @@ export default function Info({ countries }) {
         shadow="xl"
         border="1px solid #e9e9e9"
         width="100%"
-        maxHeight="calc(100vh - 54px - 16px - 32px)" // 100vh - header height - gap - layout padding
+        maxHeight="calc(100vh - 54px - 64px - 32px)" // 100vh - header height - gap - layout padding
         overflow=" scroll"
+        bgColor="#fff"
       >
         <List display="flex" flexDirection="column">
           {countries.map(({ code, name, emoji }) => (

@@ -14,20 +14,26 @@ export const Step2: FC<IStepProps> = ({
   return (
     <Fade in transition={{ enter: { duration: 0.5 } }}>
       <Flex direction="column">
-        <Text fontSize="4xl" fontWeight={600}>
-          Almost done!
-        </Text>
-
-        <Text fontSize="sm" mt={0.5}>
-          Provide your job title to sign in.
+        <Text
+          fontSize={11}
+          fontWeight={700}
+          color="#000"
+          textTransform="none"
+          mt={6}
+        >
+          Job title
         </Text>
         <Input
+          mb={6}
+          mt={1}
           name="jobTitle"
-          mt={6}
           value={value}
           placeholder="Your job title"
           onChange={handleInputChange}
         />
+        <Text fontSize={11} fontWeight={700} color="#2C2C2C">
+          Explore The Tour
+        </Text>
         <Flex mt={16} width={"100%"} justifyContent={"flex-end"}>
           <ButtonGroup>
             {/* move back to first step */}

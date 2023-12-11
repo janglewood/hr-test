@@ -1,10 +1,13 @@
-import { Flex, Fade } from "@chakra-ui/react";
+import { Flex, Fade, Box, Text } from "@chakra-ui/react";
 import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { Step1 } from "./Step1";
 import { Step2 } from "./Step2";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useRouter } from "next/router";
 import { User } from "../../types/user";
+import Image from "next/image";
+import { fonts } from "../../../app/fonts";
+import { useDetectMobileDevice } from "../../hooks/useDetectMobileDevice";
 
 // common interface for both step components
 export interface IStepProps {
@@ -80,23 +83,56 @@ export const WelcomeModal: FC = () => {
   const CurrentStep = useMemo(() => stepsConfig[step - 1], [step]);
 
   return (
-    <Fade in={true} delay={0.5}>
-      <Flex
-        p={10}
-        pt={20}
-        color="#000"
-        border="1px solid #e9e9e9"
-        rounded="xl"
-        shadow="xl"
-      >
-        <CurrentStep
-          value={userData[step === 1 ? "name" : "jobTitle"] || ""}
-          handleInputChange={handleInputChange}
-          isNextStepAlowed={isNextStepAlowed}
-          handleNextStage={handleNextStage}
-          handleBack={handleBack}
-        />
-      </Flex>
-    </Fade>
+    <Box width="100%">
+      <Fade in={true} delay={0.5}>
+        <Flex
+          color="#000"
+          bgColor="white"
+          width={{ sm: "fit-content", md: "100%" }}
+          margin={{ sm: "0 auto", md: "0" }}
+          alignItems="center"
+          gap={4}
+        >
+          <Flex
+            p={6}
+            direction="column"
+            textTransform="uppercase"
+            width="100%"
+            maxWidth="350px"
+          >
+            <Text color="#7E7E7E" fontWeight={700} fontSize={10}>
+              The Grand Moment
+            </Text>
+            <Text
+              className={fonts.PlayfairDisplay.className}
+              fontSize={44}
+              fontWeight={700}
+              color="#2C2C2C"
+              letterSpacing="3px"
+              mt="15px"
+            >
+              Le tour
+            </Text>
+            <CurrentStep
+              value={userData[step === 1 ? "name" : "jobTitle"] || ""}
+              handleInputChange={handleInputChange}
+              isNextStepAlowed={isNextStepAlowed}
+              handleNextStage={handleNextStage}
+              handleBack={handleBack}
+            />
+          </Flex>
+          {/* image for desktop screens */}
+          <Box width="100%" height="100%" display={{ sm: "none", md: "block" }}>
+            <Image
+              src="/images/bg.jpeg"
+              width={500}
+              height={300}
+              style={{ width: "100%", height: "100%" }}
+              alt="Background"
+            />
+          </Box>
+        </Flex>
+      </Fade>
+    </Box>
   );
 };
