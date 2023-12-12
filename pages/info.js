@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 import createApolloClient from "../apollo-client";
 import Head from "next/head";
-import { Flex, List, OrderedList, UnorderedList } from "@chakra-ui/react";
+import { Flex, List } from "@chakra-ui/react";
 import { GET_COUNTRIES } from "../src/graphql/queries/countries";
 import { CountryModal } from "../src/components/CountryModal";
 import { InfoListItem } from "../src/components/InfoListItem";

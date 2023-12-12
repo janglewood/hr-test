@@ -18,8 +18,9 @@ export default function RootLayout({
         direction="column"
         color="#000"
         padding={16}
+        pt={8}
         minHeight="100vh"
-        gap={8}
+        gap={4}
         bgColor="#eaeaea"
       >
         {/* header */}

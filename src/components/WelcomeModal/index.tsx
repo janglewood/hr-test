@@ -123,6 +123,7 @@ export const WelcomeModal: FC = () => {
           {/* image for desktop screens */}
           <Box width="100%" height="100%" display={{ sm: "none", md: "block" }}>
             <Image
+              priority
               src="/images/bg.jpeg"
               width={500}
               height={300}

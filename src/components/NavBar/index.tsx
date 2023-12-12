@@ -13,14 +13,17 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import { Link } from "@chakra-ui/next-js";
 import { User } from "../../types/user";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 export default function NavBar() {
   const [user] = useLocalStorage<User>("user", {});
 
+  const router = useRouter();
+
   return (
     <Flex as="nav" justify="flex-end">
-      {/* check if user is signed in. Is fo - show user info and add the link to edit data */}
-      {user.name && (
+      {/* check if user is signed in and page is not 'editing page'. Is fo - show user info and add the link to edit data */}
+      {user.name && router.pathname !== "/" && (
         <Popover>
           <PopoverTrigger>
             <Flex
